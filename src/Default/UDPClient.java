@@ -91,7 +91,7 @@ static long[] rtt = new long[NUM_PINGS];
 			sendPing(ping);
 			/* Read the reply by getting the received ping message */
 			try {
-				Message reply = . . . .;
+				Message reply = receivePing(ping);
 				handleReply(reply.getContents());
 			} catch (SocketTimeoutException e) {
 				/* Reply did not arrive. Do nothing for now. Figure
@@ -107,7 +107,8 @@ static long[] rtt = new long[NUM_PINGS];
 		}
 		while (numReplies < NUM_PINGS) {
 			try {
-				Message reply = . . . .;
+				Message ping = null;
+				Message reply = receivePing(ping);
 				handleReply(reply.getContents());
 			} catch (SocketTimeoutException e) {
 				/* Nothing coming our way apparently. Exit loop. */
