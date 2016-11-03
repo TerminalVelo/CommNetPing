@@ -51,7 +51,7 @@ static long[] rtt = new long[NUM_PINGS];
 		
 		try{
 			host = args[0];
-			port = Integer.parseInt(args[0]);
+			port = Integer.parseInt(args[1]);
 		} catch (ArrayIndexOutOfBoundsException e) {
 			System.out.println("Need two arguments: remoteHost remotePort");
 			System.exit(-1);
