@@ -51,7 +51,7 @@ static long[] rtt = new long[NUM_PINGS];
 		
 		try{
 			host = args[0];
-			port = Integer.parseInt(args[0]);
+			port = Integer.parseInt(args[1]);
 		} catch (ArrayIndexOutOfBoundsException e) {
 			System.out.println("Need two arguments: remoteHost remotePort");
 			System.exit(-1);
@@ -91,29 +91,39 @@ static long[] rtt = new long[NUM_PINGS];
 			sendPing(ping);
 			/* Read the reply by getting the received ping message */
 			try {
-				Message reply = . . . .;
+				
+				Message reply = receivePing();
 				handleReply(reply.getContents());
+				
 			} catch (SocketTimeoutException e) {
+				
 				/* Reply did not arrive. Do nothing for now. Figure
 				 * out lost pings later. */
 			}
 		}
 
-		try {
+		try{
+			
 			socket.setSoTimeout(REPLY_TIMEOUT);
-		} catch (SocketException e) {
+			
+		}catch (SocketException e) {
 
 			System.out.println("Error setting timeout REPLY_TIMEOUT: " + e);
+			
 		}
-		while (numReplies < NUM_PINGS) {
-			try {
-				Message reply = . . . .;
+		while (numReplies < NUM_PINGS){
+			try{
+				
+				Message reply = receivePing();
 				handleReply(reply.getContents());
-			} catch (SocketTimeoutException e) {
+				
+			}catch (SocketTimeoutException e) {
+				
 				/* Nothing coming our way apparently. Exit loop. */
 				numReplies = NUM_PINGS;
 			}
 		}
+		
 		/* Print statistics */
 		for (int i = 0; i < NUM_PINGS; i++) {
 			System.out.println("PING " + i + ": " + replies[i]

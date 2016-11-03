@@ -36,12 +36,10 @@ public class PingClient {
     	
     	InetAddress host = ping.getIP();
     	int port = ping.getPort();
-//PROBLEM
     	String message = ping.getContents();
-//PROBLEM
+    	
     	try	{
-    		byte buffer[] = new byte[MAX_PING_LEN];
-    		DatagramPacket packet = new DatagramPacket(buffer,MAX_PING_LEN,host,port);
+    		DatagramPacket packet = new DatagramPacket(message.getBytes(), message.getBytes().length,host,port);
     				
     		socket.send(packet);
     		System.out.println("Sent message to " + host + ":" + port);
@@ -50,7 +48,7 @@ public class PingClient {
     	}
     }
     
-	public Message receivePing(Message ping) throws SocketTimeoutException	{
+	public Message receivePing() throws SocketTimeoutException	{
 	    	
 			byte recvBuf[] = new byte[MAX_PING_LEN];
 	    	DatagramPacket recvPacket = new DatagramPacket(recvBuf, MAX_PING_LEN);
@@ -63,7 +61,7 @@ public class PingClient {
 	    		System.out.println("Received message from " + recvPacket.getAddress() + ":" + recvPacket.getPort());
 	    		String recvMsg = new String(recvPacket.getData());		
 	    		System.out.println(recvMsg.trim());
-	    		reply = ping;
+	    		reply = new Message(recvPacket.getAddress(), recvPacket.getPort(), recvMsg);
 	    		
 	    	} catch (SocketTimeoutException e) {
 	    		throw e;
