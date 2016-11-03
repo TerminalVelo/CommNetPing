@@ -91,7 +91,7 @@ static long[] rtt = new long[NUM_PINGS];
 			sendPing(ping);
 			/* Read the reply by getting the received ping message */
 			try {
-				
+
 				Message reply = receivePing();
 				handleReply(reply.getContents());
 				
@@ -111,6 +111,7 @@ static long[] rtt = new long[NUM_PINGS];
 			System.out.println("Error setting timeout REPLY_TIMEOUT: " + e);
 			
 		}
+
 		while (numReplies < NUM_PINGS){
 			try{
 				
